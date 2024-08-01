@@ -8,11 +8,14 @@
     "lint": "eslint .",
     "start": "react-native start",
     "dev": "npx react-native start --experimental-debugger",
-    "test": "jest"
+    "test": "jest",
+    "clean": "watchman watch-del-all",
+    "install-ios": "cd ios && pod install --verbose && cd .."
   },
   "dependencies": {
     "react": "18.2.0",
-    "react-native": "0.74.3"
+    "react-native": "0.74.3",
+    "react-native-track-player": "^4.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
