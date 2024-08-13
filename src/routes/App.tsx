@@ -180,7 +180,6 @@ function App(): React.JSX.Element {
       <StatusBar translucent={true} backgroundColor={'transparent'} />
       <ImageBackground
         style={styles.blurBackground}
-        imageStyle={{}}
         source={
           activaTrack?.artwork
             ? {uri: activaTrack?.artwork}
