@@ -69,25 +69,61 @@ const practices: PracticeItem[] = [
   },
 ];
 
-const sampleTrack: Track = {
-  url: 'https://d3nhzmkfu4bi2a.cloudfront.net/German/German%20Level%201%20orig/asset/main_audio/9781442348653_German1_U01_Lesson.mp3?versionId=I861TznwsEWHsaUxdzU.FiSbKV6LgHrO',
-  title: `Lesson 1`,
-  artist: 'Pimsleur',
-  album: 'German Level 1',
-  contentType: 'mp3',
-  artwork:
-    'https://d3kaeubvx0x0ex.cloudfront.net/German/German%20Level%201%20orig/asset/lesson_photo/full/GR_1_M_02.jpg?versionId=mr4xmNNhjeKzVh3pBWGcE6ndhP_7yly0',
-  pitchAlgorithm: PitchAlgorithm.Voice,
-};
-
-const imageUrl =
-  'https://d3kaeubvx0x0ex.cloudfront.net/German/German%20Level%201%20orig/asset/lesson_photo/full/GR_1_M_02.jpg?versionId=mr4xmNNhjeKzVh3pBWGcE6ndhP_7yly0';
-const screenWidth = Dimensions.get('window').width;
-const screenHeight = Dimensions.get('window').height;
+const sampleTracks: Track[] = [
+  {
+    url: 'https://d3nhzmkfu4bi2a.cloudfront.net/German/German%20Level%201%20orig/asset/main_audio/9781442348653_German1_U01_Lesson.mp3?versionId=I861TznwsEWHsaUxdzU.FiSbKV6LgHrO',
+    title: `Lesson 1`,
+    artist: 'Pimsleur',
+    album: 'German Level 1',
+    contentType: 'mp3',
+    artwork:
+      'https://d3kaeubvx0x0ex.cloudfront.net/German/German%20Level%201%20orig/asset/lesson_photo/full/GR_1_M_02.jpg?versionId=mr4xmNNhjeKzVh3pBWGcE6ndhP_7yly0',
+    pitchAlgorithm: PitchAlgorithm.Voice,
+  },
+  {
+    url: 'https://d3nhzmkfu4bi2a.cloudfront.net/German/German%20Level%201%20orig/asset/main_audio/9781442348653_German1_U07_Lesson.mp3?versionId=5hxg0NNLt9rkE6j60ppvNO2ZduLX2Bol',
+    title: `Lesson 7`,
+    artist: 'Pimsleur',
+    album: 'German Level 1',
+    contentType: 'mp3',
+    artwork:
+      'https://d3nhzmkfu4bi2a.cloudfront.net/German/German%20Level%201%20orig/asset/lesson_photo/full/GR_1_M_07.jpg?versionId=o.zivaNiUMh.pJlpKO_zfZqkrTf2_ZWF',
+    pitchAlgorithm: PitchAlgorithm.Voice,
+  },
+  {
+    url: 'https://d3nhzmkfu4bi2a.cloudfront.net/German/German%20Level%201%20orig/asset/main_audio/9781442348653_German1_U27_Lesson.mp3?versionId=CsUXB7pYeSJlv3MHSb7VxrVfXikJ6odt',
+    title: `Lesson 27`,
+    artist: 'Pimsleur',
+    album: 'German Level 1',
+    contentType: 'mp3',
+    artwork:
+      'https://d3nhzmkfu4bi2a.cloudfront.net/German/German%20Level%201%20orig/asset/lesson_photo/full/GR_1_M_27.jpg?versionId=S0CrT3Nx8F53S5zE22Kme2vfKYHLI3lL',
+    pitchAlgorithm: PitchAlgorithm.Voice,
+  },
+  {
+    url: 'https://d3nhzmkfu4bi2a.cloudfront.net/French/French%20Level%201%202018/asset/main_audio/9781508261131_French1_U27_Lesson.mp3?versionId=BcpGQ1OHzvjR4kMEP1sHRYRPz0qTVTDK',
+    title: `Lesson 27`,
+    artist: 'Pimsleur',
+    album: 'French Level 1',
+    contentType: 'mp3',
+    artwork:
+      'https://d3nhzmkfu4bi2a.cloudfront.net/French/French%20Level%201%202018/asset/lesson_photo/full/FR_1_M_27.jpg?versionId=HCcVzDgy1UMWZR.OSdejL3uX67WSB3FC',
+    pitchAlgorithm: PitchAlgorithm.Voice,
+  },
+  {
+    url: 'https://d3nhzmkfu4bi2a.cloudfront.net/French/French%20Level%201%202018/asset/main_audio/9781508261131_French1_U01_Lesson.mp3?versionId=BH5e_s9QtNRo4tkdxkon3X8bmGIUb6as',
+    title: `Lesson 1`,
+    artist: 'Pimsleur',
+    album: 'French Level 1',
+    contentType: 'mp3',
+    artwork:
+      'https://d3nhzmkfu4bi2a.cloudfront.net/French/French%20Level%201%202018/asset/lesson_photo/full/FR_1_M_01.jpg?versionId=ENxibsGeel0002FgH_DzPNrSb5xxho5N',
+    pitchAlgorithm: PitchAlgorithm.Voice,
+  },
+];
 
 function App(): React.JSX.Element {
   const [hasInitPlayer, setHasInitPlayer] = React.useState(false);
-  const [queueReset, setQueueReset] = React.useState(false);
   const {playing, bufferingDuringPlay} = useIsPlaying();
   const {duration, position} = useProgress();
   const activaTrack = useActiveTrack();
@@ -110,7 +146,7 @@ function App(): React.JSX.Element {
       await SetupAudioPlayService();
       setHasInitPlayer(true);
       // load and play the sample track
-      await TrackPlayer.load(sampleTrack);
+      await TrackPlayer.add(sampleTracks);
     }
     await TrackPlayer.play();
   };
@@ -145,14 +181,24 @@ function App(): React.JSX.Element {
       <ImageBackground
         style={styles.blurBackground}
         imageStyle={{}}
-        source={{uri: imageUrl}}
+        source={
+          activaTrack?.artwork
+            ? {uri: activaTrack?.artwork}
+            : require('../player/assets/default_cover.png')
+        }
         resizeMethod={'resize'}
         blurRadius={50}>
         <View style={styles.overlay} />
       </ImageBackground>
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentInsetAdjustmentBehavior="automatic">
         <Image
-          source={{uri: imageUrl}}
+          source={
+            activaTrack?.artwork
+              ? {uri: activaTrack?.artwork}
+              : require('../player/assets/default_cover.png')
+          }
           resizeMethod="resize"
           resizeMode="cover"
           style={styles.image}
@@ -170,7 +216,7 @@ function App(): React.JSX.Element {
             maximumValue={duration}
             value={position}
             minimumTrackTintColor="#FFFFFF"
-            maximumTrackTintColor="#000000"
+            maximumTrackTintColor="#666666"
             thumbTintColor="#FFFFFF"
             onSlidingComplete={slideComplete}
           />
@@ -254,6 +300,8 @@ function App(): React.JSX.Element {
   );
 }
 
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
   blurBackground: {
     position: 'absolute',
