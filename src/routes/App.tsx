@@ -120,6 +120,14 @@ const sampleTracks: Track[] = [
       'https://d3nhzmkfu4bi2a.cloudfront.net/French/French%20Level%201%202018/asset/lesson_photo/full/FR_1_M_01.jpg?versionId=ENxibsGeel0002FgH_DzPNrSb5xxho5N',
     pitchAlgorithm: PitchAlgorithm.Voice,
   },
+  {
+    url: 'https://www2.cs.uic.edu/~i101/SoundFiles/BabyElephantWalk60.wav',
+    title: `Demo`,
+    artist: 'Unkown artist',
+    album: 'DemoDemo',
+    contentType: 'wav',
+    pitchAlgorithm: PitchAlgorithm.Voice,
+  },
 ];
 
 function App(): React.JSX.Element {
@@ -180,28 +188,41 @@ function App(): React.JSX.Element {
       <StatusBar translucent={true} backgroundColor={'transparent'} />
       <ImageBackground
         style={styles.blurBackground}
-        source={
-          activaTrack?.artwork
-            ? {uri: activaTrack?.artwork}
-            : require('../player/assets/default_cover.png')
-        }
+        source={require('../player/assets/default_cover.png')}
         resizeMethod={'resize'}
         blurRadius={50}>
+        <Image
+          source={
+            activaTrack?.artwork
+              ? {uri: activaTrack.artwork}
+              : require('../player/assets/default_cover.png')
+          }
+          style={styles.blurBackground}
+          blurRadius={50}
+          resizeMethod={'resize'}
+          resizeMode={'cover'}
+        />
         <View style={styles.overlay} />
       </ImageBackground>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentInsetAdjustmentBehavior="automatic">
-        <Image
-          source={
-            activaTrack?.artwork
-              ? {uri: activaTrack?.artwork}
-              : require('../player/assets/default_cover.png')
-          }
-          resizeMethod="resize"
-          resizeMode="cover"
-          style={styles.image}
-        />
+        <ImageBackground
+          style={styles.coverImageBkg}
+          imageStyle={styles.coverImage}
+          source={require('../player/assets/default_cover.png')}>
+          <Image
+            source={
+              activaTrack?.artwork
+                ? {uri: activaTrack.artwork}
+                : require('../player/assets/default_cover.png')
+            }
+            resizeMethod="resize"
+            resizeMode="cover"
+            style={styles.coverImage}
+          />
+        </ImageBackground>
+
         <View style={styles.lessonInfoView}>
           <Text style={styles.lessonTitle}>
             {activaTrack?.title ?? 'Sample Lesson'}
@@ -329,13 +350,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 30,
   },
-  image: {
+  coverImageBkg: {
     width: 300,
     height: 300,
     marginTop: 64,
     alignSelf: 'center',
     borderRadius: 8,
-    backgroundColor: 'white',
+  },
+  coverImage: {
+    width: 300,
+    height: 300,
+    borderRadius: 8,
   },
   iconLoading: {
     width: 40,
