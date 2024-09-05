@@ -326,12 +326,12 @@ const styles = StyleSheet.create({
   blurBackground: {
     position: 'absolute',
     width: screenWidth,
-    height: screenHeight,
+    height: screenHeight + (StatusBar.currentHeight ?? 0),
   },
   overlay: {
     position: 'absolute',
     width: screenWidth,
-    height: screenHeight,
+    height: screenHeight + (StatusBar.currentHeight ?? 0),
     backgroundColor: 'rgba(255, 255, 255, 0.3)',
   },
   playButton: {
