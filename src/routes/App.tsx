@@ -125,6 +125,19 @@ function App(): React.JSX.Element {
   );
 }
 
+/**
+ * TODO:
+ * 1. Sign in flow, stack navigator.
+ * 2. Relaunch flow
+ * 3. Home screen with bottom tab.
+ * 4. Transition between signin and home screen. tab navigator to stack navigator.
+ * 5. Transition between home screens, double tap to exit the app.
+ * 6. Home screen UI with transparent header and bottom tab.
+ * 7. Taps button rapidly won't cause repeated screen to be pushed.
+ * 8. iPhone X and Android with notch support.
+ * 9. Transition mode, push, modal, etc.
+ */
+
 const styles = StyleSheet.create({
   sectionContainer: {
     marginTop: 32,
