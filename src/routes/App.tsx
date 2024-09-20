@@ -5,8 +5,9 @@
  * @format
  */
 
+// import "./gesture-handler";
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
@@ -27,6 +28,13 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import {PageLearn} from '../pages/learn/PageLearn';
+import {PagePractice} from '../pages/practice/PagePractice';
+import {PageVoiceCoachHome} from '../pages/voiceCoach/PageVCModeSelector';
+import {PageMiniLesson} from '../pages/miniLesson/PageMiniLesson';
+import {PageMe} from '../pages/me/PageMe';
+import {createStackNavigator} from '@react-navigation/stack';
+import {BackgroundImageView} from '../components/BackgroundImageView';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -108,20 +116,62 @@ function DetailScreen() {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Text>Details Screen</Text>
+      <BackgroundImageView />
     </View>
   );
 }
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
 function App(): React.JSX.Element {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerTransparent: true,
+            headerTintColor: '#ffffff',
+            headerLeftLabelVisible: false,
+          }}>
+          <Stack.Screen
+            options={{headerShown: false}}
+            name="Home"
+            component={HomeTabs}
+          />
+          <Stack.Screen name="Details" component={DetailScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+  );
+}
+
+/**
+ * create custom tabbar https://snack.expo.dev/@khageshfoodapp/material-bottom-tabs-navigator-%7C-react-navigation?platform=android
+ */
+
+function HomeTabs({navigation}: any) {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        headerStyle: {height: 106, borderBottomWidth: 0},
+        headerTransparent: true,
+        headerTintColor: '#ffffff',
+        tabBarStyle: {position: 'absolute', borderTopWidth: 0},
+        tabBarBackground: () => <View style={{backgroundColor: '#00000000'}} />,
+        tabBarLabelStyle: {
+          color: '#ffffff',
+          fontSize: 15,
+          fontWeight: 'bold',
+          lineHeight: 49,
+        },
+        tabBarActiveBackgroundColor: 'yellow',
+        tabBarIconStyle: {display: 'none'},
+      }}>
+      <Tab.Screen name="Learn" component={PageLearn} />
+      <Tab.Screen name="Practice" component={PagePractice} />
+      <Tab.Screen name="Speak" component={PageVoiceCoachHome} />
+      <Tab.Screen name="Enrich" component={PageMiniLesson} />
+      <Tab.Screen name="Me" component={PageMe} />
+    </Tab.Navigator>
   );
 }
 
@@ -129,13 +179,12 @@ function App(): React.JSX.Element {
  * TODO:
  * 1. Sign in flow, stack navigator.
  * 2. Relaunch flow
- * 3. Home screen with bottom tab.
- * 4. Transition between signin and home screen. tab navigator to stack navigator.
- * 5. Transition between home screens, double tap to exit the app.
- * 6. Home screen UI with transparent header and bottom tab.
- * 7. Taps button rapidly won't cause repeated screen to be pushed.
- * 8. iPhone X and Android with notch support.
- * 9. Transition mode, push, modal, etc.
+ * 3. Transition between signin and home screen. tab navigator to stack navigator.
+ * 4. Transition between home screens, double tap to exit the app.
+ * 5. Taps button rapidly won't cause repeated screen to be pushed.
+ * 6. iPhone X and Android with notch support.
+ * 7. Transition mode, push, modal, etc.
+ * 8. Customize header bar and bottom tab.
  */
 
 const styles = StyleSheet.create({
