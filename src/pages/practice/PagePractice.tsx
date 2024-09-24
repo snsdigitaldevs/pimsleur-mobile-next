@@ -1,13 +1,14 @@
 import React from 'react';
 import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
 import {BackgroundImageView} from '../../components/BackgroundImageView';
+import {CustomSafeArea} from '../../components/CustomSafeArea';
 
 export const PagePractice = ({navigation}: any) => {
-
   return (
-    <View style={{flex: 1}}>
+    <CustomSafeArea customStyle={{flex: 1}} withNavigation withTabBar>
       <BackgroundImageView />
       <FlatList
+        showsVerticalScrollIndicator={false}
         data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
         keyExtractor={item => item.toString()}
         renderItem={({item}) => (
@@ -20,7 +21,7 @@ export const PagePractice = ({navigation}: any) => {
           </Pressable>
         )}
       />
-    </View>
+    </CustomSafeArea>
   );
 };
 
