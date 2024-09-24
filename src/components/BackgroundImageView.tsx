@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Image, ImageSourcePropType, StyleSheet} from 'react-native';
+import {Dimensions, Image, ImageSourcePropType, StyleSheet} from 'react-native';
 
 interface IPageBackgroundImageProps {
   source?: ImageSourcePropType;
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    width: '100%',
-    height: '100%',
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
   },
 });

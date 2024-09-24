@@ -185,6 +185,7 @@ function HomeTabs({navigation}: any) {
  * 6. iPhone X and Android with notch support.
  * 7. Transition mode, push, modal, etc.
  * 8. Customize header bar and bottom tab.
+ * 9. The content is scrolled out of the screen height.
  */
 
 const styles = StyleSheet.create({
