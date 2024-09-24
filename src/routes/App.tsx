@@ -11,6 +11,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
+  FlatList,
+  Pressable,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -35,6 +37,7 @@ import {PageMiniLesson} from '../pages/miniLesson/PageMiniLesson';
 import {PageMe} from '../pages/me/PageMe';
 import {createStackNavigator} from '@react-navigation/stack';
 import {BackgroundImageView} from '../components/BackgroundImageView';
+import {CustomSafeArea} from '../components/CustomSafeArea';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -114,10 +117,20 @@ function HomeScreen({navigation}: any) {
 
 function DetailScreen() {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <CustomSafeArea customStyle={{flex: 1}} withNavigation>
       <Text>Details Screen</Text>
       <BackgroundImageView />
-    </View>
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+        keyExtractor={item => item.toString()}
+        renderItem={({item}) => (
+          <Pressable style={styles.button} onPress={() => {}}>
+            <Text>Go to Details</Text>
+          </Pressable>
+        )}
+      />
+    </CustomSafeArea>
   );
 }
 
@@ -126,21 +139,21 @@ const Tab = createBottomTabNavigator();
 
 function App(): React.JSX.Element {
   return (
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerTransparent: true,
-            headerTintColor: '#ffffff',
-            headerLeftLabelVisible: false,
-          }}>
-          <Stack.Screen
-            options={{headerShown: false}}
-            name="Home"
-            component={HomeTabs}
-          />
-          <Stack.Screen name="Details" component={DetailScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          headerTransparent: true,
+          headerTintColor: '#ffffff',
+          headerLeftLabelVisible: false,
+        }}>
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="Home"
+          component={HomeTabs}
+        />
+        <Stack.Screen name="Details" component={DetailScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
@@ -182,10 +195,8 @@ function HomeTabs({navigation}: any) {
  * 3. Transition between signin and home screen. tab navigator to stack navigator.
  * 4. Transition between home screens, double tap to exit the app.
  * 5. Taps button rapidly won't cause repeated screen to be pushed.
- * 6. iPhone X and Android with notch support.
- * 7. Transition mode, push, modal, etc.
- * 8. Customize header bar and bottom tab.
- * 9. The content is scrolled out of the screen height.
+ * 6. Transition mode, push, modal, etc.
+ * 7. Customize header bar and bottom tab.
  */
 
 const styles = StyleSheet.create({
@@ -204,6 +215,15 @@ const styles = StyleSheet.create({
   },
   highlight: {
     fontWeight: '700',
+  },
+  button: {
+    padding: 20,
+    borderColor: '#ededed',
+    borderWidth: 1,
+    borderRadius: 5,
+    backgroundColor: '#ffffff',
+    marginHorizontal: 20,
+    marginVertical: 10,
   },
 });
 
