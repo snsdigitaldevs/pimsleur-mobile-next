@@ -193,7 +193,7 @@ function HomeTabs({navigation}: any) {
  * 1. Sign in flow, stack navigator.
  * 2. Relaunch flow
  * 3. Transition between signin and home screen. tab navigator to stack navigator.
- * 4. Transition between home screens, double tap to exit the app.
+ * 4. Transition between home screens, double tap to exit the app (Android specifically).
  * 5. Taps button rapidly won't cause repeated screen to be pushed.
  * 6. Transition mode, push, modal, etc.
  * 7. Customize header bar and bottom tab.
