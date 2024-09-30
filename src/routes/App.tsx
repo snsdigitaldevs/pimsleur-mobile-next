@@ -19,11 +19,11 @@ import {PageMe} from '../pages/me/PageMe';
 import {createStackNavigator} from '@react-navigation/stack';
 import {BackgroundImageView} from '../components/BackgroundImageView';
 import {CustomSafeArea} from '../components/CustomSafeArea';
+import {CustomTabBar} from '../components/CustomTabBar';
 
 function DetailScreen() {
   return (
     <CustomSafeArea customStyle={{flex: 1}} withNavigation>
-      <Text>Details Screen</Text>
       <BackgroundImageView />
       <FlatList
         showsVerticalScrollIndicator={false}
@@ -69,8 +69,6 @@ function App(): React.JSX.Element {
  */
 
 function HomeTabs({navigation}: any) {
-  React.useEffect(() => {}, []);
-
   return (
     <Tab.Navigator
       screenOptions={{
@@ -79,36 +77,36 @@ function HomeTabs({navigation}: any) {
         headerTintColor: '#ffffff',
         tabBarStyle: {position: 'absolute', borderTopWidth: 0},
         tabBarBackground: () => <View style={{backgroundColor: '#00000000'}} />,
-        tabBarLabel(props) {
-          console.log('tabBarLabel', props);
-          return (
-            <View
-              style={{
-                height: 49,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Text
-                style={{
-                  color: props.focused ? 'blue' : 'white',
-                  fontSize: 14,
-                  fontWeight: 'bold',
-                  backgroundColor: props.focused ? '#fff' : '#00000000',
-                  height: 26,
-                  lineHeight: 26,
-                  paddingHorizontal: 6,
-                  borderRadius: 13,
-                  overflow: 'hidden',
-                  minWidth: 40,
-                  textAlign: 'center',
-                }}>
-                {props.children}
-              </Text>
-            </View>
-          );
-        },
+        // tabBarLabel(props) {
+        //   return (
+        //     <View
+        //       style={{
+        //         height: 49,
+        //         alignItems: 'center',
+        //         justifyContent: 'center',
+        //       }}>
+        //       <Text
+        //         style={{
+        //           color: props.focused ? 'blue' : 'white',
+        //           fontSize: 14,
+        //           fontWeight: 'bold',
+        //           backgroundColor: props.focused ? '#fff' : '#00000000',
+        //           height: 26,
+        //           lineHeight: 26,
+        //           paddingHorizontal: 6,
+        //           borderRadius: 13,
+        //           overflow: 'hidden',
+        //           minWidth: 40,
+        //           textAlign: 'center',
+        //         }}>
+        //         {props.children}
+        //       </Text>
+        //     </View>
+        //   );
+        // },
         tabBarIconStyle: {display: 'none'},
-      }}>
+      }}
+      tabBar={props => <CustomTabBar {...props} />}>
       <Tab.Screen name="Learn" component={PageLearn} />
       <Tab.Screen name="Practice" component={PagePractice} />
       <Tab.Screen name="Speak" component={PageVoiceCoachHome} />
